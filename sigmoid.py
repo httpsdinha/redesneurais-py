@@ -3,6 +3,12 @@ import numpy as np
 def sigmoid(soma):
     return 1 / (1 + np.exp(-soma))
 
+def sigmoidDerivada(sig):
+    return sig * (1 - sig)
+
+def delta(e, d):
+    return e * d
+
 
 entradas = np.array([[0,0],
                     [0,1],
@@ -22,4 +28,21 @@ for j in range(epocas):
     camadaEntrada = entradas
     somaSinapse0 = np.dot(camadaEntrada, pesos0)
     camadaOculta = sigmoid(somaSinapse0)
-print(camadaOculta)
+
+    somaSinapse1 = np.dot(camadaOculta, pesos1)
+    camadaSaida = sigmoid(somaSinapse1) 
+
+    erroCamadaSaida = saidas - camadaSaida
+    mediaAbs = np.mean(np.abs(erroCamadaSaida))
+
+    derivadaAtivacao = sigmoidDerivada(camadaSaida)
+
+    deltaSaida = erroCamadaSaida * derivadaAtivacao
+
+    
+    pesos1Transporta = pesos1.T
+    deltaSaidaXPeso = deltaSaida.dot(pesos1Transporta)
+    deltaCamadaOculta = deltaSaidaXPeso * sigmoidDerivada(camadaOculta)
+
+
+print(deltaCamadaOculta)
