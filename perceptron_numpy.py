@@ -1,8 +1,9 @@
 import numpy as np
+import sigmoid
 
 
-entradas = np.array([1, 1])
-pesos = np.array([0.5, 0.5])
+entradas = np.array([0.5,0.5,0.5])
+pesos = np.array([-0.017, -0.893, 0.148])
 
 def soma(e, p):
     return e.dot(p)
@@ -17,4 +18,6 @@ def stepFunction(soma):
     return 0
 
 r = stepFunction(s)
-print(r)
+s = sigmoid.sigmoid(-0.424)
+print('Step: ', r)
+print('Sigmoid: ', s)
